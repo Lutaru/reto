@@ -58,13 +58,15 @@ $mensaje = $_SESSION['mensaje'];
                                 <th scope="col">Estado</th>
                                 <th scope="col">Operaciones</th>
                             </tr>
-                            
+
                         </thead>
                         <tbody>
 
                             <?php foreach($tareas as $datos): ?>
                             <form action="logica.php" method="post">
                                 <?php $alert = $datos['estado'] == "PENDIENTE" ? "warning" : "success" ?>
+                                <?php $btn_alert = $datos['estado'] == "PENDIENTE" ? "success" : "warning" ?>
+                                <?php $btn_estado = $datos['estado'] == "PENDIENTE" ? "completar" : "pendiente" ?>
 
                                 <input type="hidden" name="id_tarea" value="<?= $datos['id'] ?>">
                                 <input type="hidden" name="estado" value="<?= $datos['estado'] ?>">
@@ -74,8 +76,8 @@ $mensaje = $_SESSION['mensaje'];
                                     <td><?= $datos['tarea'] ?></td>
                                     <td><div class="alert alert-<?= $alert ?>" role="alert"><?= $datos['estado']?></div></td>
                                     <td>
-                                        <button class="btn btn-success" name="operacion" value="actualizar"
-                                            type="submit">Estado</button>
+                                        <button class="btn btn-<?= $btn_alert ?>" name="operacion" value="actualizar"
+                                            type="submit"><?= $btn_estado ?></button>
                                         <button class="btn btn-danger" name="operacion" value="eliminar"
                                             type="submit">Eliminar</button>
                                     </td>
