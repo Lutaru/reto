@@ -28,3 +28,18 @@ function eliminarTarea($id_tarea){
 
     return $result;
 }
+
+function actualizarEstado($id_tarea, $estado_actual){
+    if ($estado_actual == "PENDIENTE") {
+
+        $estado_nuevo = "COMPLETADA";
+    }else {
+        $estado_nuevo = "PENDIENTE";
+    }
+    /* echo $estado_nuevo;die; */
+    global $conn;
+    $sql = "UPDATE tasks SET estado = '$estado_nuevo' WHERE id = $id_tarea";
+    $result = $conn->query($sql);
+
+    return $result;
+}

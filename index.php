@@ -40,7 +40,7 @@ $mensaje = $_SESSION['mensaje'];
                         <h2>Agregar tarea</h2>
                         <input type="text" class="form-control" name="tarea" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Agregar</button>
+                    <button name="operacion" value="agregar" type="submit" class="btn btn-primary">Agregar</button>
                 </form>
             </div>
 
@@ -48,30 +48,41 @@ $mensaje = $_SESSION['mensaje'];
                 <h2>Tareas</h2>
 
                 <div class="table-responsive">
-                    <table class=" table table-dark">
+                    <table class=" table table-dark ">
 
                         <thead>
+
                             <tr>
+                                <th scope="col">id</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Estado</th>
-                                <th scope="col">operaciones</th>
+                                <th scope="col">Operaciones</th>
                             </tr>
+                            
                         </thead>
                         <tbody>
+
                             <?php foreach($tareas as $datos): ?>
-                            <?php $alert = $datos['estado'] == "pendiente" ? "warning" : "success" ?>
-                            <tr>
-                                <td><?= $datos['tarea'] ?></td>
-                                <td>
-                                    <div class="alert alert-<?= $alert ?>" role="alert"><?= $datos['estado']?></div>
-                                </td>
-                                <td>
-                                    <a href="logica.php?id=<?= $datos['id']?>"><i class="fa-solid fa-trash fa-2xl" style="color: #ce1212;"></i></a>
-                                    <a href="logica.php"><i class="fa-solid fa-check fa-spin fa-2xl" style="color: #1aad37;"></i></a>
-                                </td>
-                                
-                            </tr>
+                            <form action="logica.php" method="post">
+                                <?php $alert = $datos['estado'] == "PENDIENTE" ? "warning" : "success" ?>
+
+                                <input type="hidden" name="id_tarea" value="<?= $datos['id'] ?>">
+                                <input type="hidden" name="estado" value="<?= $datos['estado'] ?>">
+
+                                <tr>
+                                    <td><?= $datos['id'] ?></td>
+                                    <td><?= $datos['tarea'] ?></td>
+                                    <td><div class="alert alert-<?= $alert ?>" role="alert"><?= $datos['estado']?></div></td>
+                                    <td>
+                                        <button class="btn btn-success" name="operacion" value="actualizar"
+                                            type="submit">Estado</button>
+                                        <button class="btn btn-danger" name="operacion" value="eliminar"
+                                            type="submit">Eliminar</button>
+                                    </td>
+                                </tr>
+                            </form>
                             <?php endforeach; ?>
+
                         </tbody>
                     </table>
                 </div>
